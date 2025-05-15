@@ -171,10 +171,32 @@ async function updateUser(req, res) {
     }
 }
 
+async function getAllUsers(req, res) {
+    try {
+        const currentUserId = req.user.user_id;
+
+        const query = `
+            SELECT user_id, first_name, last_name, email, role, destination_id 
+            FROM "idp".idp_users 
+            WHERE user_id != $1
+        `;
+
+        const { rows } = await db.query(query, [currentUserId]);
+
+        res.status(200).json({ users: rows });
+    } catch (error) {
+        console.error('Error fetching all users:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+}
+
+
+
 module.exports = {
     register,
     login,
     getUserDetails,
     updateUser,
-    getUser
+    getUser,
+    getAllUsers  
 };

@@ -69,4 +69,6 @@ router.put('/user/:id', async (req, res, next) => {
   }
 });
 
+router.get('/all', authenticateUser, auth.getAllUsers);
+
 module.exports = router;
