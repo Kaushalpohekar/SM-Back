@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getSomeData, getForwardData, getChatMessages, sendMobileTerminatedMessage } = require('../services/inmarsatService');
+const { getSomeData, getForwardData, getChatMessages, sendMobileTerminatedMessage, getInmarsatErrorList } = require('../services/inmarsatService');
 const { authenticateUser } = require('../middleware/auth');
 
 router.post('/messages', authenticateUser, async (req, res, next) => {
@@ -56,6 +56,41 @@ router.post('/chat', authenticateUser, async (req, res) => {
 
 const getRandomByte = () => Math.floor(Math.random() * 256);
 
+// router.post('/send-mt', authenticateUser, async (req, res) => {
+//   try {
+//     const { DestinationID, message } = req.body;
+
+//     if (!DestinationID || !message) {
+//       return res.status(400).json({ message: 'DestinationID and message are required.' });
+//     }
+
+//     const SIN = getRandomByte();
+//     const MIN = getRandomByte();
+//     const messageBytes = Array.from(message).map(ch => ch.charCodeAt(0));
+//     const RawPayload = [SIN, MIN, ...messageBytes];
+
+//     const Payload = {
+//       Name: 'pingModem',
+//       SIN,
+//       MIN,
+//       Fields: []
+//     };
+
+//     const response = await sendMobileTerminatedMessage({
+//       DestinationID,
+//       RawPayload,
+//       Payload
+//     });
+
+//     res.json({
+//       message: 'MT message sent successfully',
+//       response
+//     });
+//   } catch (error) {
+//     console.error('API /send-mt Error:', error.message);
+//     res.status(500).json({ message: 'Failed to send MT message' });
+//   }
+// });
 router.post('/send-mt', authenticateUser, async (req, res) => {
   try {
     const { DestinationID, message } = req.body;
@@ -82,6 +117,15 @@ router.post('/send-mt', authenticateUser, async (req, res) => {
       Payload
     });
 
+    const result = response?.SubmitForwardMessages_JResult;
+
+    if (result?.ErrorID && result.ErrorID !== 0) {
+      return res.status(500).json({
+        message: 'MT message failed to send',
+        ErrorID: result.ErrorID
+      });
+    }
+
     res.json({
       message: 'MT message sent successfully',
       response
@@ -89,6 +133,16 @@ router.post('/send-mt', authenticateUser, async (req, res) => {
   } catch (error) {
     console.error('API /send-mt Error:', error.message);
     res.status(500).json({ message: 'Failed to send MT message' });
+  }
+});
+
+router.get('/errors', async (req, res) => {
+  try {
+    const errors = await getInmarsatErrorList();
+    res.json(errors);
+  } catch (error) {
+    console.error('Inmarsat Error Info API Error:', error.message);
+    res.status(500).json({ message: 'Failed to fetch error list.' });
   }
 });
 

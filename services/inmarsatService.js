@@ -143,6 +143,7 @@ async function getChatMessages(startUtc, endUtc) {
       };
     }
     grouped[id].MobileOriginated.push({
+      MessageID: msg.ID,
       MessageUTC: msg.MessageUTC,
       ReceiveUTC: msg.ReceiveUTC,
       RawPayload: msg.RawPayload || null
@@ -160,6 +161,7 @@ async function getChatMessages(startUtc, endUtc) {
       };
     }
     grouped[id].MobileTerminated.push({
+      MessageID: msg.ID,
       CreateUTC: msg.CreateUTC,
       StatusUTC: msg.StatusUTC,
       RawPayload: msg.RawPayload || null,
@@ -199,7 +201,7 @@ async function sendMobileTerminatedMessage({ DestinationID, RawPayload, Payload 
   const UserMessageID = String(Math.floor(Math.random() * 9) + 1); 
 
   const payload = {
-    access_id,
+    accessID: access_id,
     password,
     messages: [
       {
@@ -225,4 +227,28 @@ async function sendMobileTerminatedMessage({ DestinationID, RawPayload, Payload 
   }
 }
 
-module.exports = { getSomeData, getForwardData, getChatMessages, sendMobileTerminatedMessage };
+async function getInmarsatErrorList() {
+  const headers = {
+    Authorization: getAuthHeader(),
+    'Content-Type': 'application/json'
+  };
+
+  try {
+    const response = await axios.get(`${process.env.INMARSAT_BASE_URL}info_errors.json/`, {
+      headers
+    });
+
+    const errors = response.data || [];
+    const errorList = errors.map(err => ({
+      ErrorID: err.ID,
+      Description: err.Description
+    }));
+
+    return errorList;
+  } catch (error) {
+    console.error('❌ Failed to fetch Inmarsat error list:', error.message);
+    return [];
+  }
+}
+
+module.exports = { getSomeData, getForwardData, getChatMessages, sendMobileTerminatedMessage, getInmarsatErrorList  };
