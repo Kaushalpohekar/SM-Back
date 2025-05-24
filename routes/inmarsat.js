@@ -102,7 +102,7 @@ router.post('/send-mt', authenticateUser, async (req, res) => {
     const SIN = getRandomByte();
     const MIN = getRandomByte();
     const messageBytes = Array.from(message).map(ch => ch.charCodeAt(0));
-    const RawPayload = [SIN, MIN, ...messageBytes];
+    const RawPayload = [SIN, ...messageBytes];
 
     const Payload = {
       Name: 'pingModem',
