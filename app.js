@@ -14,7 +14,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/access.l
 
 applySecurity(app);
 app.use(rateLimiter);
-app.use(cors({ origin: ['http://localhost:4200'] }));
+// app.use(cors({ origin: ['http://localhost:4200'] }));
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(morgan('combined', { stream: accessLogStream }));
 
@@ -27,8 +28,10 @@ app.use((req, res, next) => {
 
 app.use('/idp/auth', require('./routes/auth'));
 app.use('/idp/msg', require('./routes/inmarsat'));
+app.use('/idp/devices', require('./routes/devices'));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Secure API proxy running on http://localhost:${PORT}`);
 });
+
