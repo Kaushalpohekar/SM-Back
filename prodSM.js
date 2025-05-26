@@ -33,6 +33,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/idp/test', (req, res) => {
+  res.json({ status: 'success', message: 'System is working' });
+});
+
 app.use('/idp/auth', require('./routes/auth'));
 app.use('/idp/msg', require('./routes/inmarsat'));
 app.use('/idp/devices', require('./routes/devices'));
