@@ -14259,3 +14259,6 @@
 192.168.1.147 - - [26/May/2025:09:08:25 +0000] "POST /idp/msg/chat HTTP/1.1" 401 45 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
 192.168.1.147 - - [26/May/2025:09:08:29 +0000] "POST /idp/msg/chat HTTP/1.1" 401 45 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
 192.168.1.147 - - [26/May/2025:09:08:29 +0000] "GET /idp/auth/all HTTP/1.1" 401 45 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+127.0.0.1 - - [26/May/2025:09:29:54 +0000] "POST /idp/auth/login HTTP/1.1" 200 336 "http://localhost:4200/" "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36"
+127.0.0.1 - - [26/May/2025:09:29:54 +0000] "GET /idp/auth/user HTTP/1.1" 200 169 "http://localhost:4200/" "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36"
+127.0.0.1 - - [26/May/2025:09:30:01 +0000] "GET /idp/devices HTTP/1.1" 304 - "http://localhost:4200/" "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36"
