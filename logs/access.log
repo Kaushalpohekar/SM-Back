@@ -2043,3 +2043,4 @@
 ::1 - - [23/May/2025:07:19:01 +0000] "POST /idp/msg/chat HTTP/1.1" 200 3235 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
 ::1 - - [23/May/2025:07:19:03 +0000] "GET /idp/auth/all HTTP/1.1" 304 - "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
 ::1 - - [23/May/2025:07:19:06 +0000] "POST /idp/msg/chat HTTP/1.1" 200 3235 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+::1 - - [23/May/2025:09:24:40 +0000] "POST /idp/auth/login HTTP/1.1" 401 39 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
