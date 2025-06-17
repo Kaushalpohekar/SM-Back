@@ -10,6 +10,7 @@ const axios = require('axios');
 
 const applySecurity = require('./middleware/securityHeaders');
 const rateLimiter = require('./middleware/rateLimiter');
+require('./services/updateErrorListCron');
 
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/access.log'), { flags: 'a' });
@@ -38,8 +39,9 @@ app.get('/idp/test', (req, res) => {
 });
 
 app.use('/idp/auth', require('./routes/auth'));
-app.use('/idp/msg', require('./routes/inmarsat'));
+// app.use('/idp/msg', require('./routes/inmarsat'));
 app.use('/idp/devices', require('./routes/devices'));
+app.use('/idp/msg', require('./routes/inmarsat_v2'));
 
 const PORT = process.env.PORT || 5550;
 const httpsServer = https.createServer(credentials, app);
