@@ -43,11 +43,11 @@ router.post('/chat', authenticateUser, async (req, res) => {
             return res.status(400).json({ message: 'start_utc and end_utc are required.' });
         }
 
-        const destinationId = req.user.destinationId;
+        //const destinationId = req.user.destinationId;
         const mergedData = await getChatMessages(start_utc, end_utc);
 
-        const filtered = mergedData.filter(entry => entry.TerminalID === destinationId);
-        res.json(filtered);
+        //const filtered = mergedData.filter(entry => entry.TerminalID === destinationId);
+        res.json(mergedData);
     } catch (error) {
         console.error('Inmarsat Forward API Error:', error.message);
         res.status(500).json({ message: 'Failed to fetch forward messages.' });
@@ -102,7 +102,7 @@ router.post('/send-mt', authenticateUser, async (req, res) => {
     const SIN = getRandomByte();
     const MIN = getRandomByte();
     const messageBytes = Array.from(message).map(ch => ch.charCodeAt(0));
-    const RawPayload = [SIN, MIN, ...messageBytes];
+    const RawPayload = [SIN, ...messageBytes];
 
     const Payload = {
       Name: 'pingModem',
