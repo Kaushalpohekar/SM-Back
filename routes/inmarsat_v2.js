@@ -71,7 +71,7 @@ router.get('/messages/mobile-terminated/status', async (req, res) => {
   }
 });
 
-router.post('/send-mt', async (req, res) => {
+router.post('/send-mt', authenticateUser, async (req, res) => {
   const { destinationId, userMessageId, payloadText } = req.body;
   
   if (!destinationId || !payloadText) {

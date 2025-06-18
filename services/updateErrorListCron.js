@@ -21,7 +21,7 @@ cron.schedule('0 */2 * * *', async () => {
 
 
 // 🔁 Combined MO + MT Sync Every 2 Seconds
-cron.schedule('*/2 * * * * *', async () => {
+cron.schedule('*/10 * * * * *', async () => {
   const timestamp = new Date().toISOString();
   const startTime = new Date(Date.now() - 10 * 60 * 1000).toISOString(); // 10 mins ago
   const endTime = new Date().toISOString(); // now
